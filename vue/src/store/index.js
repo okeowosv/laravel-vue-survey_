@@ -1,5 +1,6 @@
 import {createStore} from "vuex";
 import axiosClient from "../axios";
+
 axiosClient
 const store = createStore({
     state:{
