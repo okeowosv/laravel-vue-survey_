@@ -57,7 +57,7 @@
 
       <DisclosurePanel class="md:hidden">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <router-link v-for="item in navigation" :key="item.name" :to="item.to" active-class="bg-gray-900 text-white" :class="[this.$route.name === item.to.name ? '' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block px-3 py-2 rounded-md text-base font-medium']">{{ item.name }}</router-link> 
+          <router-link v-for="item in navigation" :key="item.name" :to="item.to" active-class="bg-gray-900 text-white" :class="[this.$route.name === item.to.name ? '' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block px-3 py-2 rounded-md text-base font-medium']">{{ item.name }}</router-link>
         </div>
         <div class="pt-4 pb-3 border-t border-gray-700">
           <div class="flex items-center px-5">
@@ -104,8 +104,10 @@ export default{
     const router = useRouter();
 
     function logout(){
-      store.commit('logout');
-      router.push({name:'Login'});
+      store.dispatch('logout').then(()=> {
+      router.push({name:'Login'})
+    });
+
     }
   return {
     user: computed(()=> store.state.user.data),
