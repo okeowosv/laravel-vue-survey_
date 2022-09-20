@@ -3,6 +3,7 @@ import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Register from '../views/Register.vue'
 import Survey from '../views/Surveys.vue'
+import SurveyView from '../views/SurveysView.vue'
 import DefaultLayout from '../components/DefaultLayout.vue'
 import AuthLayout from '../components/AuthLayout.vue'
 import store from '../store';
@@ -16,7 +17,9 @@ const routes = [
         meta: {requiresAuth:true},
         children: [
             {path: '/dashboard', name: 'Dashboard', component: Dashboard},
-            {path: '/surveys', name: 'Surveys', component: Survey}
+            {path: '/surveys', name: 'Surveys', component: Survey},
+            {path: '/surveys/create', name: 'SurveyCreate', component: SurveyView},
+            {path: '/surveys/:id', name: 'SurveyView', component: SurveyView}
         ]
     },
     {
@@ -35,10 +38,10 @@ const routes = [
                 path: '/register',
                 name: 'Register',
                 component: Register,
-            } 
+            }
         ]
-    },    
-  
+    },
+
 ];
 const router = createRouter({
     history: createWebHistory(),
