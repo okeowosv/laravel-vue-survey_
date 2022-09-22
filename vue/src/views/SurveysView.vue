@@ -73,7 +73,7 @@
           </div>
           <!-- Status -->
           <div class="px-4 py-5 bg-white space-x-6 sm:p-6">
-            <h3 class="text-2xl font-semibold flex items-center justify-between">
+            <h3 class="text-2xl mb-3 font-semibold flex items-center justify-between">
               Questions
               <button type="button" @click="addQuestion()" class="flex items-center text-sm py-1 px-4 rounded-sm text-white bg-gray-600 hover:bg-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -106,6 +106,7 @@
   </template>
 
   <script setup>
+  import {v4 as uuidv4} from "uuid";
   import store from "../store";
   import {ref} from "vue";
   import {useRoute} from "vue-router";
@@ -127,6 +128,24 @@
   if(route.params.id){
     model.value = store.state.surveys.find(
       (s) => s.id === parseInt(route.params.id)
+    );
+  }
+
+  function addQuestion(index){
+    const newQuestion = {
+      id: uuidv4(),
+      type: "text",
+      question: "",
+      description: null,
+      data: {},
+    };
+
+    model.value.questions.splice(index, 0, newQuestion);
+  }
+
+  function deleteQuestion(question){
+    model.value.questions = model.value.questions.filter(
+      (q) => q !== question
     );
   }
   </script>
