@@ -32,10 +32,14 @@
                 </svg>
 
               </span>
-              <button type="button" class="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-               <input type="file" class="absolute left-0 top-0 right-0 bottom-0 opacity-0 cursor-pointer" /> Change
-              </button>
+                  <div class="flex text-sm text-gray-600">
+                    <label for="file-upload" class="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                      <span>Change image</span>
+                      <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                    </label>
+                  </div>
             </div>
+            <div class="clearfix"></div>
           </div>
           <!-- Title -->
           <div>
@@ -75,7 +79,7 @@
           <div class="px-4 py-5 bg-white space-x-6 sm:p-6">
             <h3 class="text-2xl mb-3 font-semibold flex items-center justify-between">
               Questions
-              <button type="button" @click="addQuestion()" class="flex items-center text-sm py-1 px-4 rounded-sm text-white bg-gray-600 hover:bg-gray-700">
+              <button type="button" @click="addQuestion()" class="flex items-center text-sm py-1 px-4 rounded-sm text-white bg-green-700 hover:bg-green-800">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
@@ -147,6 +151,15 @@
     model.value.questions = model.value.questions.filter(
       (q) => q !== question
     );
+  }
+
+  function questionChange(question){
+    model.value.questions = model.value.questions.map((q) => {
+      if (q.id === question.id) {
+        return JSON.parse(JSON.stringify(question));
+      }
+      return q;
+    });
   }
   </script>
   <style scoped></style>
