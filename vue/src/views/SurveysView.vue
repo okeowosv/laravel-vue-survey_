@@ -25,7 +25,7 @@
               Image
             </label>
             <div class="mt-1 flex items-center">
-              <img v-if="model.image" :src="model.image" :alt="model.title" class="w-64 h-48 object-cover">
+              <img v-if="model.image_url" :src="model.image_url" :alt="model.title" class="w-64 h-48 object-cover">
               <span v-else class="flex items-center justify-center h-12 w-12 rounded full overflow-hidden bg-gray-100">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-[80%] w-[80%] text-gray-300">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -35,7 +35,7 @@
                   <div class="flex text-sm text-gray-600">
                     <label for="file-upload" class="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                       <span>Change image</span>
-                      <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                      <input @change="onImageSelected" id="file-upload" name="file-upload" type="file" class="sr-only">
                     </label>
                   </div>
             </div>
@@ -113,12 +113,13 @@
   import {v4 as uuidv4} from "uuid";
   import store from "../store";
   import {ref} from "vue";
-  import {useRoute} from "vue-router";
+  import {useRoute, useRouter} from "vue-router";
 
   import PageComponent from '../components/PageComponent.vue';
   import QuestionEditor from '../components/Editor/QuestionEditor.vue';
 
   const route = useRoute();
+  const router = useRouter();
 
   let model = ref({
     title : "",
@@ -134,6 +135,16 @@
       (s) => s.id === parseInt(route.params.id)
     );
   }
+
+   function onImageSelected(e){
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      model.value.image = reader.result;
+      model.value.image_url = reader.result;
+    };
+    reader.readAsDataURL(file);
+   }
 
   function addQuestion(index){
     const newQuestion = {
@@ -159,6 +170,15 @@
         return JSON.parse(JSON.stringify(question));
       }
       return q;
+    });
+  }
+
+  function saveSurvey(){
+    store.dispatch('saveSurvey', model.value).then(({data}) => {
+      router.push({
+        name:"SurveyView",
+        params: {id: data.data.id},
+      });
     });
   }
   </script>
