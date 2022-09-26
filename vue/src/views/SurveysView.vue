@@ -201,5 +201,17 @@
       });
     });
   }
+
+  function deleteSurvey(){
+    if(
+      confirm(`Are you sure you want to delete this survey? operation can't be undo`)
+    ){
+      store.dispatch("deleteSurvey", model.value.id).then(()=>{
+        router.push({
+          name: "Surveys",
+        });
+      })
+    }
+  }
   </script>
   <style scoped></style>
