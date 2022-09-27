@@ -28,7 +28,7 @@
       <div class="flex justify-center mt-5">
         <nav class="relative z-0 inline-flex justify-center rounded-md shadow-sm" aria-label="Pagination">
           <a v-for="(link, i) of surveys.links"
-          :key="i" :disabled="!link.url" v-html="link.label" href="#" @click="getForPage(link)" aria-current="page"
+          :key="i" :disabled="!link.url" v-html="link.label" href="#" @click="getForPage($event, link)" aria-current="page"
           class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
           :class="[link.active
           ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
@@ -60,7 +60,8 @@ function deleteSurvey(survey){
   }
 }
 
-function getForPage(link){
+function getForPage(ev, link){
+  ev.preventDefault();
   if(!link.url || link.active){
     return;
   }
