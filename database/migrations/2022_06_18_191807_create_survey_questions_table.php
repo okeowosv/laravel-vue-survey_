@@ -19,7 +19,7 @@ class CreateSurveyQuestionsTable extends Migration
             $table->string('question', 2000)->nullable();
             $table->longText('description')->nullable();
             $table->longText('data')->nullable();
-            $table->foreignIdFor(\App\Models\SurveyAnswer::class, 'survey_id');
+            $table->foreignIdFor(\App\Models\Survey::class, 'survey_id');
             $table->timestamps();
         });
     }
