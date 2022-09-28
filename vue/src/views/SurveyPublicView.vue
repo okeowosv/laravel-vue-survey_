@@ -67,6 +67,8 @@ function submitAnotherResponse() {
   surveyFinished.value = false;
 }
 
+
+
 </script>
 
 <style scoped>
