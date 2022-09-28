@@ -40,6 +40,7 @@ const store = createStore({
             throw err;
           });
       },
+
       saveSurvey({commit}, survey){
         delete survey.image_url;
         let response;
@@ -61,9 +62,11 @@ const store = createStore({
 
         return response;
       },
+
       deleteSurvey({}, id){
         return axiosClient.delete(`/survey/${id}`);
       },
+
       getSurveys({commit}, {url = null} = {}){
         url = url || '/survey'
         commit('setSurveysLoading', true);
@@ -86,6 +89,11 @@ const store = createStore({
           commit('setCurrentSurveyLoading', false);
           throw err;
         });
+      },
+
+      saveSurveyAnswer({commit}, {surveyId, answers}){
+        return axiosClient.post(`/survey/${surveyId}/answer`,{answers});
+
       },
 
       register({commit}, user){
