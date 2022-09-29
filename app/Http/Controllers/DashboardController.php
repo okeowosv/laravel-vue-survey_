@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Survey;
 use App\Models\SurveyAnswer;
 use Illuminate\Http\Request;
-use App\Http\Resources\SurveyResource;
+use App\Http\Resources\SurveyResourceDashboard;
 use App\Http\Resources\SurveyAnswerResource;
 
 class DashboardController extends Controller
@@ -31,8 +31,8 @@ class DashboardController extends Controller
 
 
         return [
-            'totalSuverys' => $total,
-            'latestSuvery' => $latest ? new SurveyResource($latest) : null,
+            'totalSurveys' => $total,
+            'latestSurvey' => $latest ? new SurveyResourceDashboard($latest) : null,
             'totalAnswers' => $totalAnswers,
             'latestAnswers' => SurveyAnswerResource::collection($latestAnswers)
         ];
